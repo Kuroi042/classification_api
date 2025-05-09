@@ -32,8 +32,9 @@ def product(request, pk): # request referes to GET put delete
     try:
         #primarry key 
         product =Product.objects.get(id=pk) #find the product using id
-    except Product.DoesNotExist(): 
-        return Response(status=404)
+    except Product.DoesNotExist: 
+        var  = 'product not fouznd'
+        return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
 # Productserializer convert the product Object to Jsonfile format 
     if request.method == 'GET':
         serializer =  ProductSerializer(product)
