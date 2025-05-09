@@ -39,3 +39,11 @@ def product(request, pk): # request referes to GET put delete
     if request.method == 'GET':
         serializer =  ProductSerializer(product)
         return Response(serializer.data)
+    if request.method == 'PUT':
+        #we added product cuz we ill update the product 
+        serializer =  ProductSerializer(product, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+    
