@@ -2,12 +2,13 @@ from django.shortcuts import render
 
 from rest_framework.response import Response
 from . models import Product 
-from . models import Users
 from . serializers import ProductSerializer
 from . serializers import registrationSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework import status 
+from rest_framework.authtoken.models import Token
+
 
 @api_view(['GET' , 'POST'])
 def Product_list(request):
@@ -67,6 +68,11 @@ def register(request):
             name  = user.username
             print(name)
             data['response'] = 'Succesfully ' +name +' created '
+            
+            ##login part##
+            
+            auth_token = Token.objects.get(user=user).key#get the logged user
+            data['auth_token'] = auth_token
         else :
             data = serializer.errors   
         return Response(data)     

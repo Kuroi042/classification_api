@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
 
 class Product(models.Model):
     name  = models.CharField(max_length=200)
@@ -10,16 +14,11 @@ class Product(models.Model):
         return self.name
     
     
-
-
-
-
-class Users(models.Model):
-    fname =models.CharField(max_length=10)
-    lname = models.CharField(max_length=10)
-    nickname= models.CharField(max_length=10)
-    age = models.IntegerField(3)
+#generate token for each user created 
+@receiver(post_save , sender=User)
+def generate_auth_token(sender, instance=None,created=False , **kwargs):
+    if created:
+        Token.objects.create(user=instance)
     
-    def __str__(self):
-        return self.nickname
     
+ 
