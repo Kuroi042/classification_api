@@ -11,3 +11,13 @@ class Product(models.Model):
     
     
 
+
+class Users(models.Model):
+    fname =models.CharField(max_length=10)
+    lname = models.CharField(max_length=10)
+    nickname= models.CharField(max_length=10)
+    age = models.IntegerField(3)
+    
+    def __str__(self):
+        return self.nickname
+    
