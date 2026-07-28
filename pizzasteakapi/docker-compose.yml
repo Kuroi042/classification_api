@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./Backend
+    container_name: pizza-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Backend:/app
+  frontend:
+    build: ./Frontend
+    container_name: pizza-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+
+    depends_on:
+      - backend
